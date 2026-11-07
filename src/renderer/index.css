@@ -1,0 +1,309 @@
+@fontsource-variable/inter;
+@fontsource-variable/jetbrains-mono;
+@fontsource/dela-gothic-one;
+@fontsource/zen-kaku-gothic-new;
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: 18 17 26;            /* ink black #12111A */
+  --surface: 27 26 38;       /* panel #1B1A26 */
+  --surface-2: 34 33 46;
+  --surface-3: 42 41 54;
+  --line: 192 178 168;       /* cream border (soft) */
+  --line-strong: 242 237 228;/* paper cream #F2EDE4 */
+  --text: 242 237 228;
+  --muted: 169 163 184;      /* #A9A3B8 */
+  --faint: 128 122 147;
+  --accent: 255 90 60;       /* vermilion #FF5A3C */
+  --accent-fg: 255 255 255;
+  --sakura: 255 183 201;     /* #FFB7C9 */
+  --success: 123 224 168;    /* #7BE0A8 */
+  --warning: 255 200 87;     /* #FFC857 */
+  --danger: 255 90 60;
+  --info: 96 165 250;
+  --grid: 255 255 255;
+  --glow-a: 255 90 60;
+  --glow-b: 140 140 160;
+  --glow-c: 90 120 160;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --bg: 243 244 248;
+  --surface: 255 255 255;
+  --surface-2: 244 244 246;
+  --surface-3: 235 235 238;
+  --line: 224 224 228;
+  --line-strong: 206 206 212;
+  --text: 22 22 25;
+  --muted: 94 94 104;
+  --faint: 132 132 142;
+  --accent: 226 46 32;
+  --accent-fg: 255 255 255;
+  --sakura: 255 183 201;
+  --success: 18 148 94;
+  --warning: 170 94 8;
+  --danger: 198 30 44;
+  --info: 37 99 235;
+  --grid: 0 0 0;
+  --glow-a: 226 80 60;
+  --glow-b: 160 160 180;
+  --glow-c: 120 140 170;
+}
+
+
+* {
+  border-color: rgb(var(--line));
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+  font-family: 'Zen Kaku Gothic New', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow: hidden;
+  user-select: none;
+}
+
+::selection {
+  background: rgb(var(--accent) / 0.28);
+  color: rgb(var(--text));
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+input,
+textarea {
+  user-select: text;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--faint));
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(var(--muted) / 0.85);
+  border: 3px solid transparent;
+  background-clip: content-box;
+  border-radius: 0;
+}
+
+
+@layer components {
+  .panel {
+    @apply border-b border-line bg-surface;
+  }
+
+  /* Manga paper panel: thick cream border, hard offset shadow, sharp corners. */
+  .glass {
+    position: relative;
+    border: 2px solid rgb(var(--line) / 0.95);
+    background: rgb(var(--surface));
+    border-radius: 2px !important;
+    box-shadow: 4px 4px 0 0 rgb(var(--line-strong) / 0.35);
+    color: rgb(var(--text));
+  }
+
+  .glass-hover {
+    transition:
+      transform 150ms ease,
+      box-shadow 150ms ease,
+      border-color 150ms ease;
+  }
+  .glass-hover:hover {
+    transform: translate(-2px, -2px);
+    border-color: rgb(var(--line-strong) / 0.95);
+    box-shadow: 6px 6px 0 0 rgb(var(--line-strong) / 0.5);
+  }
+
+  /* Section label above cards. */
+  .glass-bare {
+    @apply border-2 border-line bg-surface;
+    box-shadow: none;
+  }
+  .eyebrow {
+    @apply font-mono text-[10px] font-medium uppercase tracking-[0.18em];
+    color: rgb(var(--muted));
+  }
+
+  /* Katakana micro label. */
+  .kana {
+    font-family: 'Dela Gothic One', sans-serif;
+    letter-spacing: 0.2em;
+  }
+}
+
+
+.banner {
+  position: relative;
+  height: 140px;
+  border-bottom: 2px solid rgb(var(--line-strong) / 0.95);
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.banner-sky {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #1e1030 0%, #3a1650 34%, #6b1f62 62%, #a02a6e 100%);
+}
+
+.banner-halftone {
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(rgb(242 237 228 / 0.55) 1.5px, transparent 1.5px);
+  background-size: 14px 14px;
+  opacity: 0.12;
+  pointer-events: none;
+}
+
+.banner-scrim {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgb(18 17 26 / 0.05) 0%, rgb(18 17 26 / 0.88) 90%);
+  pointer-events: none;
+}
+
+.banner-sun {
+  position: absolute;
+  right: 22%;
+  top: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 9999px;
+  background: rgb(var(--accent));
+  border: 3px solid rgb(var(--line-strong) / 0.9);
+  pointer-events: none;
+}
+
+.banner-sun::after {
+  content: '';
+  position: absolute;
+  inset: 30%;
+  border-radius: 9999px;
+  background: rgb(var(--line-strong) / 0.85);
+}
+
+.banner-fuji {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 74px solid transparent;
+  border-right: 74px solid transparent;
+  border-bottom: 92px solid rgb(var(--line-strong) / 0.92);
+  pointer-events: none;
+}
+
+.banner-fuji::after {
+  content: '';
+  position: absolute;
+  top: -92px;
+  left: -28px;
+  width: 0;
+  height: 0;
+  border-left: 28px solid transparent;
+  border-right: 28px solid transparent;
+  border-bottom: 34px solid rgb(var(--surface));
+}
+
+.banner-torii {
+  position: absolute;
+  bottom: 20px;
+  left: 13%;
+  width: 72px;
+  height: 58px;
+  pointer-events: none;
+}
+.banner-torii::before,
+.banner-torii::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  width: 8px;
+  height: 58px;
+  background: rgb(var(--accent));
+}
+.banner-torii::before {
+  left: 10px;
+}
+.banner-torii::after {
+  right: 10px;
+}
+
+.banner-city {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  background: rgb(14 13 20 / 0.96);
+  pointer-events: none;
+}
+
+.petal {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: rgb(var(--sakura));
+  border-radius: 60% 0 60% 0;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 3;
+  animation: sakura-fall linear infinite;
+}
+
+@keyframes sakura-fall {
+  0% { transform: translateY(-12px) rotate(0deg); opacity: 0; }
+  12% { opacity: 0.9; }
+  88% { opacity: 0.75; }
+  100% { transform: translateY(150px) rotate(420deg); opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .petal { animation: none; opacity: 0.5; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+
+.log-info { color: rgb(var(--muted)); }
+.log-debug { color: rgb(var(--faint)); }
+.log-command { color: rgb(var(--info)); }
+.log-output { color: rgb(var(--text) / 0.82); }
+.log-warn { color: rgb(var(--warning)); }
+.log-error { color: rgb(var(--danger)); }

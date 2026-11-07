@@ -1,0 +1,79 @@
+{
+  "name": "xiaomi-flash-tool",
+  "productName": "Sakura Flasher",
+  "description": "Desktop application for flashing firmware and custom ROM on Xiaomi, Redmi, and POCO devices",
+  "version": "1.0.0",
+  "private": true,
+  "main": "dist/main/index.js",
+  "author": "Xiaomi Flash Tool Contributors",
+  "license": "MIT",
+  "scripts": {
+    "dev": "concurrently -k -n MAIN,RENDERER,APP -c blue,magenta,green \"npm:dev:main\" \"npm:dev:renderer\" \"npm:dev:app\"",
+    "dev:main": "tsc -p tsconfig.node.json -w --preserveWatchOutput",
+    "dev:renderer": "vite",
+    "dev:app": "wait-on dist/main/index.js tcp:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .",
+    "build:node": "tsc -p tsconfig.node.json",
+    "build:renderer": "vite build",
+    "build": "rimraf dist && npm run build:node && npm run build:renderer && node scripts/generate-icon.mjs",
+    "typecheck": "tsc -p tsconfig.node.json --noEmit && tsc -p tsconfig.web.json --noEmit",
+    "dist": "npm run build && electron-builder --win nsis",
+    "clean": "rimraf dist release"
+  },
+  "build": {
+    "appId": "com.xiaomi.flasher",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.1.1",
+    "@fontsource-variable/jetbrains-mono": "^5.1.1",
+    "@fontsource/dela-gothic-one": "^5.3.0",
+    "@fontsource/zen-kaku-gothic-new": "^5.3.1",
+    "@radix-ui/react-checkbox": "^1.1.3",
+    "@radix-ui/react-dialog": "^1.1.0",
+    "@radix-ui/react-label": "^2.1.2",
+    "@radix-ui/react-progress": "^1.1.2",
+    "@radix-ui/react-scroll-area": "^1.2.1",
+    "@radix-ui/react-select": "^2.1.6",
+    "@radix-ui/react-switch": "^1.1.3",
+    "@radix-ui/react-tabs": "^1.1.3",
+    "@radix-ui/react-tooltip": "^1.1.3",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.468.0",
+    "tailwind-merge": "^2.6.0",
+    "tailwindcss-animate": "^1.0.7",
+    "tar": "^7.4.3",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "electron": "^45.2.2",
+    "electron-builder": "^26.18.1",
+    "postcss": "^8.4.49",
+    "rimraf": "^6.0.1",
+    "tailwindcss": "^3.4.19",
+    "vite": "^5.4.11",
+    "wait-on": "^8.0.1"
+  }
+}
